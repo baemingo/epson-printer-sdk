@@ -169,7 +169,7 @@ class EpsonPrint {
     this.message += '<text' + s + '/>';
     return this;
   }
-  public addTextDouble(dw, dh: string) {
+  public addTextDouble(dw: string, dh: string) {
     var s = '';
     if (dw !== undefined) {
       s += utils.getBoolAttr('dw', dw);
@@ -252,6 +252,7 @@ class EpsonPrint {
     });
     return this;
   }
+
   public addBarcode(
     data: string,
     type: string,
@@ -260,51 +261,38 @@ class EpsonPrint {
     width: number,
     height: number,
   ) {
-    var s = '';
-    s += utils.getEnumAttr('type', type, regexBarcode);
-    if (hri !== undefined) {
-      s += utils.getEnumAttr('hri', hri, regexHri);
-    }
-    if (font !== undefined) {
-      s += utils.getEnumAttr('font', font, regexFont);
-    }
-    if (width !== undefined) {
-      s += utils.getUByteAttr('width', width);
-    }
-    if (height !== undefined) {
-      s += utils.getUByteAttr('height', height);
-    }
-    this.message +=
-      '<barcode' + s + '>' + utils.escapeControl(utils.escapeMarkup(data)) + '</barcode>';
+    this.addRow('barcode', utils.escapeControl(utils.escapeMarkup(data)), {
+      type,
+      hri,
+      font,
+      width,
+      height,
+    });
+
     return this;
   }
 
   public addHLine(x1: number, x2: number, style: string) {
-    var s = '';
-    s += utils.getUShortAttr('x1', x1);
-    s += utils.getUShortAttr('x2', x2);
-    if (style !== undefined) {
-      s += utils.getEnumAttr('style', style, regexLine);
-    }
-    this.message += '<hline' + s + '/>';
+    this.addRow('hline', null, {
+      x1,
+      x2,
+      style,
+    });
     return this;
   }
-  public addVLineBegin(x, style: string) {
-    var s = '';
-    s += utils.getUShortAttr('x', x);
-    if (style !== undefined) {
-      s += utils.getEnumAttr('style', style, regexLine);
-    }
-    this.message += '<vline-begin' + s + '/>';
+  public addVLineBegin(x: number, style: string) {
+    this.addRow('vline', null, {
+      x,
+      style,
+    });
     return this;
   }
-  public addVLineEnd(x, style: string) {
-    var s = '';
-    s += utils.getUShortAttr('x', x);
-    if (style !== undefined) {
-      s += utils.getEnumAttr('style', style, regexLine);
-    }
-    this.message += '<vline-end' + s + '/>';
+  public addVLineEnd(x: number, style: string) {
+    this.addRow('vline', null, {
+      x,
+      style,
+    });
+
     return this;
   }
 
@@ -324,7 +312,7 @@ class EpsonPrint {
     return this;
   }
 
-  public addSound(pattern: any, repeat: ant, cycle: string) {
+  public addSound(pattern: any, repeat: any, cycle: string) {
     this.addRow('sound', null, {
       pattern,
       repeat,
