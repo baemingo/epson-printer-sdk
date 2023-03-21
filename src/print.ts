@@ -140,9 +140,9 @@ class EpsonPrint {
     return this;
   }
   public addTextAlign(align: string) {
-    var s = '';
-    s += utils.getEnumAttr('align', align, regexAlign);
-    this.message += '<text' + s + '/>';
+    this.addRow('text', null, {
+      align,
+    });
     return this;
   }
   public addTextRotate(rotate: string) {
@@ -152,15 +152,16 @@ class EpsonPrint {
     return this;
   }
   public addTextLineSpace(linespc: string) {
-    var s = '';
-    s += utils.getUByteAttr('linespc', linespc);
-    this.message += '<text' + s + '/>';
+    this.addRow('text', null, {
+      linespc,
+    });
     return this;
   }
   public addTextFont(font: string) {
-    var s = '';
-    s += utils.getEnumAttr('font', font, regexFont);
-    this.message += '<text' + s + '/>';
+    this.addRow('text', null, {
+      font,
+    });
+
     return this;
   }
   public addTextSmooth(smooth: string) {
@@ -204,16 +205,16 @@ class EpsonPrint {
     });
     return this;
   }
-  public addTextPosition(x: string) {
-    var s = '';
-    s += utils.getUShortAttr('x', x);
-    this.message += '<text' + s + '/>';
+  public addTextPosition(x: number) {
+    this.addRow('text', null, {
+      x,
+    });
     return this;
   }
-  public addTextVPosition(y: string) {
-    var s = '';
-    s += utils.getUShortAttr('y', y);
-    this.message += '<text' + s + '/>';
+  public addTextVPosition(y: number) {
+    this.addRow('text', null, {
+      y,
+    });
     return this;
   }
   public addFeedUnit(unit: string) {

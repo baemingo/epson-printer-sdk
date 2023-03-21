@@ -1,21 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2015",
-    "jsx": "react",
-    "moduleResolution": "node",
     "lib": ["es2020", "dom"],
-    "baseUrl": "./src",
-    "strict": true,
-    "skipLibCheck": true,
-    "declaration": true,
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
+    "target": "es2020",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
     "outDir": "./dist",
-  },
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+  }
 }

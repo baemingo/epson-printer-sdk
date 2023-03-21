@@ -40,10 +40,6 @@ class EpsonPrinter {
       // If there's an error, "code" contains the error
       const code = response.attributes.code ?? '';
 
-      // Currently not used
-      const status = parseInt(response.attributes.status) ?? 0;
-      const battery = parseInt(response.attributes.battery) ?? 0;
-
       if (!success) {
         throw new Error(code);
       }

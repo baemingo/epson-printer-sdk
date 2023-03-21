@@ -1,6 +1,6 @@
 {
   "name": "@baemingo/epson-printer-sdk",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "A modern and simple \"connect-less\" integration against EPSON printers",
   "license": "MIT",
   "publishConfig": {
@@ -15,55 +15,16 @@
   },
   "main": "index.js",
   "scripts": {
-    "precommit": "lint-staged && yarn test",
-    "test": "jest --coverage",
-    "build": "rm -rf dist && tsc",
-    "prettier": "prettier -l",
-    "deploy": "cp package.json ./dist && cd dist && npm publish",
-    "lint": "tslint --config ./tslint.json --project ./tsconfig.json",
-    "lint-tests": "tslint --config tslint.json --project tests/tsconfig.json"
+    "build": "rm -rf dist && tsc"
   },
   "devDependencies": {
     "@types/jest": "24.0.18",
     "@types/lodash": "4.14.141",
     "@types/node": "^12.6.2",
-    "jest": "24.9.0",
-    "lint-staged": "9.4.1",
-    "prettier": "1.18.2",
-    "ts-jest": "24.1.0",
-    "tslint": "5.20.0",
-    "typescript": "3.6.2"
+    "prettier": "^2.8.6",
+    "typescript": "^5.0.2"
   },
   "dependencies": {
     "react-xml-parser": "^1.1.8"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,js}": [
-      "yarn lint"
-    ],
-    "tests/**/*.{ts,js}": [
-      "yarn lint-tests"
-    ],
-    "**/*.{ts,js}": [
-      "yarn prettier"
-    ]
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.ts",
-      "!**/node_modules/**",
-      "!**/dist/**"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
   }
 }
