@@ -1,5 +1,43 @@
 import * as utils from './utils';
 
+export namespace Epson {
+  /**
+   * Font types to use with the .addTextFont call
+   */
+  export enum Font {
+    A = 'font_a',
+    B = 'font_b',
+    C = 'font_c',
+    D = 'font_d',
+    E = 'font_e',
+  }
+
+  /**
+   * Symbol types to use with the .addSymbol call
+   */
+  export enum Symbol {
+    PDF417_STANDARD = 'pdf417_standard',
+    PDF417_TRUNCATED = 'pdf417_truncated',
+    QRCODE_MODEL_1 = 'qrcode_model_1',
+    QRCODE_MODEL_2 = 'qrcode_model_2',
+    QRCODE_MICRO = 'qrcode_micro',
+    MAXICODE_MODE_2 = 'maxicode_mode_2',
+    MAXICODE_MODE_3 = 'maxicode_mode_3',
+    MAXICODE_MODE_4 = 'maxicode_mode_4',
+    MAXICODE_MODE_5 = 'maxicode_mode_5',
+    MAXICODE_MODE_6 = 'maxicode_mode_6',
+    GS1_DATABAR_STACKED = 'gs1_databar_stacked',
+    GS1_DATABAR_STACKED_OMNIDIRECTIONAL = 'gs1_databar_stacked_omnidirectional',
+    GS1_DATABAR_EXPANDED_STACKED = 'gs1_databar_expanded_stacked',
+    AZTECCODE_FULLRANGE = 'azteccode_fullrange',
+    AZTECCODE_COMPACT = 'azteccode_compact',
+    DATAMATRIX_SQUARE = 'datamatrix_square',
+    DATAMATRIX_RECTANGLE_8 = 'datamatrix_rectangle_8',
+    DATAMATRIX_RECTANGLE_12 = 'datamatrix_rectangle_12',
+    DATAMATRIX_RECTANGLE_16 = 'datamatrix_rectangle_16',
+  }
+}
+
 class EpsonPrint {
   private message = '';
   private halftone = 0;
@@ -48,25 +86,6 @@ class EpsonPrint {
   public static HRI_ABOVE = 'above' as const;
   public static HRI_BELOW = 'below' as const;
   public static HRI_BOTH = 'both' as const;
-  public static SYMBOL_PDF417_STANDARD = 'pdf417_standard' as const;
-  public static SYMBOL_PDF417_TRUNCATED = 'pdf417_truncated' as const;
-  public static SYMBOL_QRCODE_MODEL_1 = 'qrcode_model_1' as const;
-  public static SYMBOL_QRCODE_MODEL_2 = 'qrcode_model_2' as const;
-  public static SYMBOL_QRCODE_MICRO = 'qrcode_micro' as const;
-  public static SYMBOL_MAXICODE_MODE_2 = 'maxicode_mode_2' as const;
-  public static SYMBOL_MAXICODE_MODE_3 = 'maxicode_mode_3' as const;
-  public static SYMBOL_MAXICODE_MODE_4 = 'maxicode_mode_4' as const;
-  public static SYMBOL_MAXICODE_MODE_5 = 'maxicode_mode_5' as const;
-  public static SYMBOL_MAXICODE_MODE_6 = 'maxicode_mode_6' as const;
-  public static SYMBOL_GS1_DATABAR_STACKED = 'gs1_databar_stacked' as const;
-  public static SYMBOL_GS1_DATABAR_STACKED_OMNIDIRECTIONAL = 'gs1_databar_stacked_omnidirectional' as const;
-  public static SYMBOL_GS1_DATABAR_EXPANDED_STACKED = 'gs1_databar_expanded_stacked' as const;
-  public static SYMBOL_AZTECCODE_FULLRANGE = 'azteccode_fullrange' as const;
-  public static SYMBOL_AZTECCODE_COMPACT = 'azteccode_compact' as const;
-  public static SYMBOL_DATAMATRIX_SQUARE = 'datamatrix_square' as const;
-  public static SYMBOL_DATAMATRIX_RECTANGLE_8 = 'datamatrix_rectangle_8' as const;
-  public static SYMBOL_DATAMATRIX_RECTANGLE_12 = 'datamatrix_rectangle_12' as const;
-  public static SYMBOL_DATAMATRIX_RECTANGLE_16 = 'datamatrix_rectangle_16' as const;
   public static LEVEL_0 = 'level_0' as const;
   public static LEVEL_1 = 'level_1' as const;
   public static LEVEL_2 = 'level_2' as const;
@@ -217,6 +236,25 @@ class EpsonPrint {
     });
     return this;
   }
+
+  public addSymbol(
+    data: string,
+    type: Epson.Symbol,
+    level: number,
+    width: number,
+    height: number,
+    size: number,
+  ) {
+    this.addRow('symbol', utils.escapeMarkup(data), {
+      type,
+      level,
+      width,
+      height,
+      size,
+    });
+    return this;
+  }
+
   public addFeedUnit(unit: string) {
     this.message += `<feed unit="${unit}/>`;
     return this;

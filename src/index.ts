@@ -1,5 +1,5 @@
 import EpsonPrinter from './printer';
-import EpsonPrint from './print';
+import EpsonPrint, { Epson } from './print';
 
 export default EpsonPrinter;
-export { EpsonPrint };
+export { EpsonPrint, Epson };

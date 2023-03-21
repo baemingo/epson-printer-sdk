@@ -25,14 +25,21 @@ yarn add @baemingo/epson-printer-sdk
 ## Usage
 
 ```ts
-import EpsonPrinter, { EpsonPrint } from '@baemingo/epson-printer-sdk';
+import EpsonPrinter, { EpsonPrint, Epson } from '@baemingo/epson-printer-sdk';
 
 // Create a printer instance
 const printer = new EpsonPrinter('192.168.0.1');
 
 // Build up a print object
 const print = new EpsonPrint();
+
+// Add some text
 print.addText('Hello, world!');
+
+// Add a QR code
+print.addSymbol('1234', Epson.Symbol.QRCODE_MODEL_1, 1, 50, 50, 2);
+
+// Cut the paper
 print.addCut(EpsonPrint.CUT_FEED);
 
 // Send the print object to the printer

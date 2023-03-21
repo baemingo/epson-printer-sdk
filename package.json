@@ -1,6 +1,6 @@
 {
   "name": "@baemingo/epson-printer-sdk",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "A modern and simple \"connect-less\" integration against EPSON printers",
   "license": "MIT",
   "publishConfig": {
