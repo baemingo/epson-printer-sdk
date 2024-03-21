@@ -12,6 +12,22 @@ export namespace Epson {
     E = 'font_e',
   }
 
+  export enum ErrorCorrection {
+    LEVEL_1 = 'level_1',
+    LEVEL_2 = 'level_2',
+    LEVEL_3 = 'level_3',
+    LEVEL_4 = 'level_4',
+    LEVEL_5 = 'level_5',
+    LEVEL_6 = 'level_6',
+    LEVEL_7 = 'level_7',
+    LEVEL_8 = 'level_8',
+    LEVEL_L = 'level_l',
+    LEVEL_M = 'level_m',
+    LEVEL_Q = 'level_q',
+    LEVEL_H = 'level_h',
+    LEVEL_DEFAULT = 'level_default',
+  }
+
   /**
    * Symbol types to use with the .addSymbol call
    */
@@ -240,17 +256,69 @@ class EpsonPrint {
   public addSymbol(
     data: string,
     type: Epson.Symbol,
-    level: number,
-    width: number,
-    height: number,
-    size: number,
+    options?: {
+      errorCorrectionLevel?: number;
+
+      /**
+       * Module width
+       *
+       * DF417: 2 to 8 (default: 3)
+       *
+       * QR Code: 3 to 16 (default: 3)
+       *
+       * MaxiCode: Ignored
+       *
+       * 2D GS1 Databar: 2 to 8 (default: 2)
+       *
+       * Aztec Code: 2 to 16 (default: 3)
+       *
+       * DataMatrix: 2 to 16 (default: 3)
+       */
+      width?: number;
+
+      /**
+       * Module height
+       *
+       * Ignored for all symbologies except PDF417
+       */
+      height?: number;
+
+      /**
+       * Specifies the two-dimensional symbol maximum size
+       *
+       * Ignored for all symbologies except:
+       *
+       * PDF417: Specifies the number of code words for each row
+       *
+       * 2D GS1 Databar: Specifies the maximum width for the barcode (106 or above)
+       */
+      size?: number;
+    },
+  ) {
+    this.addRow('symbol', utils.escapeControl(utils.escapeMarkup(data)), {
+      type,
+      level: options?.errorCorrectionLevel,
+      width: options?.width,
+      height: options?.height,
+      size: options?.size,
+    });
+    return this;
+  }
+
+  public addQRCode(
+    data: string,
+    options?: {
+      /**
+       * The Size of the QR, 1-16 (Default: 3)
+       */
+      size?: number;
+      errorCorrectionLevel?: number;
+    },
   ) {
     this.addRow('symbol', utils.escapeMarkup(data), {
-      type,
-      level,
-      width,
-      height,
-      size,
+      type: Epson.Symbol.QRCODE_MODEL_2,
+      level: options?.errorCorrectionLevel,
+      width: options?.size,
     });
     return this;
   }
@@ -280,6 +348,8 @@ class EpsonPrint {
     this.addRow('image', base64ImageData, {
       height,
       width,
+      color: 'color_1',
+      mode: 'mono',
     });
     return this;
   }
@@ -395,7 +465,7 @@ class EpsonPrint {
   private addRow(
     field: string,
     value?: string | null,
-    fields?: Record<string, string | number | boolean>,
+    fields?: Record<string, string | number | boolean | undefined>,
   ) {
     this.message += `<${field}`;
     if (fields) {

@@ -17,39 +17,34 @@ class EpsonPrinter {
   public async send(print: EpsonPrint) {
     const data = print.toString();
 
-    try {
-      const xml = await this.request(data);
-      const [response] = xml.getElementsByTagName('response');
+    const xml = await this.request(data);
+    const [response] = xml.getElementsByTagName('response');
 
-      /**
-       * Example response:
-       * <soapenv:Body>
-       *   <response
-       *     success="false" code="DeviceNotFound" status="0" battery="0"
-       *     xmlns="http://www.epson-pos.com/schemas/2011/03/epos-print"
-       *   />
-       * </soapenv:Body>
-       */
+    /**
+     * Example response:
+     * <soapenv:Body>
+     *   <response
+     *     success="false" code="DeviceNotFound" status="0" battery="0"
+     *     xmlns="http://www.epson-pos.com/schemas/2011/03/epos-print"
+     *   />
+     * </soapenv:Body>
+     */
 
-      if (!response) {
-        throw new Error('INVALID_RESPONSE');
-      }
-
-      const success = response.attributes.success === 'true';
-
-      // If there's an error, "code" contains the error
-      const code = response.attributes.code ?? '';
-
-
-      if (!success) {
-        throw new Error(code);
-      }
-
-      /** Successful print */
-      return true;
-    } catch (e) {
-      console.error(e);
+    if (!response) {
+      throw new Error('INVALID_RESPONSE');
     }
+
+    const success = response.attributes.success === 'true';
+
+    // If there's an error, "code" contains the error
+    const code = response.attributes.code ?? '';
+
+    if (!success) {
+      throw new Error(code);
+    }
+
+    /** Successful print */
+    return response;
   }
 
   private async request(data: string) {

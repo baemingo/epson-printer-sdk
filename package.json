@@ -1,6 +1,6 @@
 {
   "name": "@baemingo/epson-printer-sdk",
-  "version": "0.9.9",
+  "version": "0.9.20",
   "description": "A modern and simple \"connect-less\" integration against EPSON printers",
   "license": "MIT",
   "publishConfig": {
@@ -15,7 +15,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc"
+    "build": "rm -rf dist && tsc",
+    "np": "yarn build && cp package.json dist"
   },
   "devDependencies": {
     "@types/jest": "24.0.18",
