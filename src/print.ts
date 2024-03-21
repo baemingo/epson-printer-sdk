@@ -444,6 +444,11 @@ class EpsonPrint {
     return this;
   }
 
+  public kickOutDrawer(drawer: string = EpsonPrint.DRAWER_1, pulse: string = EpsonPrint.PULSE_100): EpsonPrint {
+    this.addRow('pulse', null, { drawer, time: pulse });
+    return this; 
+  }
+
   public toString() {
     var s = '';
     if (this.force) {
