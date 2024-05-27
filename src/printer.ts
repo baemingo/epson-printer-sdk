@@ -47,6 +47,49 @@ class EpsonPrinter {
     return response;
   }
 
+  public async getStatus(print: EpsonPrint) {
+    const data = print.toString();
+
+    const xml = await this.request(data);
+    const [response] = xml.getElementsByTagName('response');
+    const status = parseInt(response.attributes.status, 10);
+
+    const statuses = {
+      isResponsive: true,
+      drawerIsOpen: true,
+      coverIsOpen: false,
+      isOffline: false,
+      paperNearEmpty: false,
+      paperEmpty: false,
+    };
+
+    if (status & 0x00000001) {
+      statuses.isResponsive = false;
+    }
+
+    if (status & 0x00000004) {
+      statuses.drawerIsOpen = false;
+    }
+
+    if (status & 0x00000008) {
+      statuses.isOffline = true;
+    }
+
+    if (status & 0x00000020) {
+      statuses.coverIsOpen = true;
+    }
+
+    if (status & 0x00020000) {
+      statuses.paperNearEmpty = true;
+    }
+
+    if (status & 0x00080000) {
+      statuses.paperEmpty = true;
+    }
+
+    return statuses;
+  }
+
   private async request(data: string) {
     const body = `${EPSON_XML_HEADER}${data}</s:Body></s:Envelope>`;
     const result = await fetch(this.url, {
