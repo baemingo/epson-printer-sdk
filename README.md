@@ -22,6 +22,14 @@ or using yarn:
 yarn add @baemingo/epson-printer-sdk
 ```
 
+## Publish
+
+1. Change version number in package.json
+2. `yarn build`
+3. `cp package.json dist/`
+4. `cd dist`
+5. `npm publish`
+
 ## Usage
 
 ```ts
