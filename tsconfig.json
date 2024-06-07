@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["es2020", "dom"],
-    "target": "es2020",
+    "lib": ["dom", "es5", "es6", "es2019", "es2020"],
+    "target": "es5",
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -9,6 +9,6 @@
     "declaration": true,
     "noEmitOnError": true,
     "skipLibCheck": true,
-    "outDir": "./dist",
+    "outDir": "./dist"
   }
 }

@@ -37,7 +37,7 @@ class EpsonPrinter {
     const success = response.attributes.success === 'true';
 
     // If there's an error, "code" contains the error
-    const code = response.attributes.code ?? '';
+    const code = response.attributes.code || '';
 
     if (!success) {
       throw new Error(code);
